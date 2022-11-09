@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, noload
 
-from sql.models import Category, Product
+from sql.models import Category
 
 
 def get_category(db: Session, category_id: int):

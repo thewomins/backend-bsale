@@ -1,7 +1,7 @@
 from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
 
-from sql.database import SessionLocal, engine
+from sql.database import SessionLocal
 from controllers import productController
 from schemas.product import Product
 
