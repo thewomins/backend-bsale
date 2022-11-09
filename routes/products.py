@@ -1,4 +1,4 @@
-from fastapi import Depends, APIRouter, HTTPException
+from fastapi import Depends, APIRouter, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from sql.database import SessionLocal
@@ -25,16 +25,23 @@ def read_product(product_id: int, db: Session = Depends(get_db)):
 
 
 @product.get("/products", response_model=list[Product])
-def read_all_products(db: Session = Depends(get_db)):
-    db_products = productController.get_all_products(db)
+def read_all_products(
+    ids: list[int] | None = Query(default=None), db: Session = Depends(get_db)
+):
+    db_products = productController.get_all_products(db, ids)
     if db_products is None:
         raise HTTPException(status_code=404, detail="Product not found")
     return db_products
 
 
-@product.get("/products/inrange/{minimo}-{maximo}", response_model=list[Product])
-def read_products_in_range(minimo: int, maximo: int, db: Session = Depends(get_db)):
-    db_products = productController.get_all_products(db, minimo, maximo)
+@product.get("/products/inrange/{minimo}-{maximo}/", response_model=list[Product])
+def read_products_in_range(
+    minimo: int,
+    maximo: int,
+    db: Session = Depends(get_db),
+    ids: list[int] | None = Query(default=None),
+):
+    db_products = productController.get_all_products(db, ids, minimo, maximo)
     if db_products is None:
         raise HTTPException(status_code=404, detail="Product not found")
     return db_products

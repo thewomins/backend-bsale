@@ -19,5 +19,9 @@ def search_product(db: Session, product_name: list[str]):
     return db.query(Product).filter(and_(*likeQuery)).limit(13).all()
 
 
-def get_all_products(db: Session, skip: int = 0, limit: int = 20):
+def get_all_products(
+    db: Session, product_id: list[int] | None, skip: int = 0, limit: int = 20
+):
+    if product_id != None:
+        return db.query(Product).filter(Product.id.in_(product_id)).all()
     return db.query(Product).offset(skip).limit(limit).all()
