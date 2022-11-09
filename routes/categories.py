@@ -35,7 +35,6 @@ def read_all_categories(db: Session = Depends(get_db)):
 @category.get("/categories-only", response_model=list[Category])
 def read_categories(db: Session = Depends(get_db)):
     db_categories = categoryController.get_categories(db)
-    print(db_categories)
     if db_categories is None:
         raise HTTPException(status_code=404, detail="category not found")
     return db_categories
