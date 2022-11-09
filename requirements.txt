@@ -1,0 +1,5 @@
+fastapi[all]==0.78.0
+python-dotenv==0.21.0
+sqlalchemy==1.4.43
+pydantic==4.2.0
+PyMySQL==1.0.2
