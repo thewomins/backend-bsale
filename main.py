@@ -1,22 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 
 from routes.products import product
 from routes.categories import category
 
 app = FastAPI(
-    title="Api [nombre app]",
-    description="this is a REST API using fastapi and mongodb",
-    version="0.9.0",
+    title="Api Bsale",
+    description="this is a REST API",
+    version="1.0.0",
 )
 
 app.include_router(product)
 app.include_router(category)
-
-origins = [
-    "http://127.0.0.1:5573",
-]
 
 app.add_middleware(
     CORSMiddleware,
