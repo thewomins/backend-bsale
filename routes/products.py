@@ -1,5 +1,7 @@
 from fastapi import Depends, APIRouter, HTTPException, Query
 from sqlalchemy.orm import Session
+from typing import List
+from typing import Union
 
 from sql.database import SessionLocal
 from controllers import productController
@@ -24,9 +26,9 @@ def read_product(product_id: int, db: Session = Depends(get_db)):
     return db_product
 
 
-@product.get("/products", response_model=list[Product])
+@product.get("/products", response_model=List[Product])
 def read_all_products(
-    ids: list[int] | None = Query(default=None), db: Session = Depends(get_db)
+    ids: Union[List[int], None] = Query(default=None), db: Session = Depends(get_db)
 ):
     db_products = productController.get_all_products(db, ids)
     if db_products is None:
@@ -34,12 +36,12 @@ def read_all_products(
     return db_products
 
 
-@product.get("/products/inrange/{minimo}-{maximo}/", response_model=list[Product])
+@product.get("/products/inrange/{minimo}-{maximo}/", response_model=List[Product])
 def read_products_in_range(
     minimo: int,
     maximo: int,
     db: Session = Depends(get_db),
-    ids: list[int] | None = Query(default=None),
+    ids: Union[List[int], None] = Query(default=None),
 ):
     db_products = productController.get_all_products(db, ids, minimo, maximo)
     if db_products is None:
@@ -47,7 +49,7 @@ def read_products_in_range(
     return db_products
 
 
-@product.get("/search/products/{product_name}", response_model=list[Product])
+@product.get("/search/products/{product_name}", response_model=List[Product])
 def search_product(product_name: str, db: Session = Depends(get_db)):
     db_product = productController.search_product(db, product_name.split("-"))
     if db_product is None:

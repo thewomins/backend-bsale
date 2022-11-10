@@ -1,9 +1,10 @@
 from pydantic import BaseModel
+from typing import Union
 
 
 class ProductBase(BaseModel):
     name: str
-    url_image: str | None
+    url_image: Union[str, None]
     price: float
     discount: int
 

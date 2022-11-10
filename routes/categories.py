@@ -1,5 +1,6 @@
 from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 
 from sql.database import SessionLocal
 from controllers import categoryController
@@ -24,7 +25,7 @@ def read_category(category_id: int, db: Session = Depends(get_db)):
     return db_category
 
 
-@category.get("/categories", response_model=list[Category])
+@category.get("/categories", response_model=List[Category])
 def read_all_categories(db: Session = Depends(get_db)):
     db_categories = categoryController.get_all_categories(db)
     if db_categories is None:
@@ -32,7 +33,7 @@ def read_all_categories(db: Session = Depends(get_db)):
     return db_categories
 
 
-@category.get("/categories-only", response_model=list[Category])
+@category.get("/categories-only", response_model=List[Category])
 def read_categories(db: Session = Depends(get_db)):
     db_categories = categoryController.get_categories(db)
     if db_categories is None:
