@@ -18,5 +18,5 @@ pip install -r requirements.txt
 ## How to use?
 
 ``` bash
-uvicorn main:app --reload
+uvicorn main:app --host 0.0.0.0 --port 80
 ```
